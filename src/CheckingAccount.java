@@ -15,8 +15,4 @@ public class CheckingAccount extends BankAccount {
             System.out.println("Withdrawal denied: overdraft limit reached.");
         }
     }
-
-    public float getOverdraftLimit() {
-        return overdraftLimit;
-    }
 }

@@ -19,7 +19,7 @@ public class Main {
                 case 2 -> DepositToAccount();
                 case 3 -> WithdrawFromAccount();
                 case 4 -> listAccounts();
-                case 5 -> System.out.println("Transfer feature not yet implemented.");
+                case 5 -> TransferToAccount();
                 case 6 -> System.out.println("Delete account feature not yet implemented.");
                 case 0 -> System.out.println("Exiting program...");
                 default -> System.out.println("Invalid input, try again.");
@@ -28,53 +28,51 @@ public class Main {
         input.close();
     }
 
-    private static void  WithdrawFromAccount(){
-        if (accounts.isEmpty()) {
-            System.out.println("No accounts available. Create one first.");
+
+    private static void TransferToAccount() {
+        System.out.println("Select source account:");
+        BankAccount from = SelectAccount("withdraw from");
+        if (from == null) return;
+
+        System.out.println("Select destination account:");
+        BankAccount to = SelectAccount("deposit into");
+        if (to == null) return;
+
+        float amount = ReadFloat("Enter transfer amount: ");
+        if (amount <= 0) {
+            System.out.println("Transfer amount must be positive.");
             return;
         }
 
-        listAccounts();
-        int index = (ReadInt("Select account number to withdraw from: ") - 1);
+        from.withdraw(amount);
+        to.deposit(amount);
+        System.out.println("Transfer successful.");
+    }
 
-        if (index < 0 || index >= accounts.size()) {
-            System.out.println("Invalid account selection.\n");
-            return;
-        }
+    private static void WithdrawFromAccount() {
+        BankAccount account = SelectAccount("Withdraw from");
+        if (account == null) return;
 
         float amount = ReadFloat("Enter withdraw amount: ");
-        if (amount <= 0 || amount > accounts.get(index).getBalance()){
-            System.out.println("Withdrawal amount must be less than overdraft limit");
+        if (amount <= 0) {
+            System.out.println("Withdraw amount must be positive.");
             return;
         }
 
-        BankAccount account = accounts.get(index);
         account.withdraw(amount);
         System.out.println("Withdrawal successful.");
-
     }
 
     private static void DepositToAccount() {
-        if (accounts.isEmpty()) {
-            System.out.println("No accounts available. Create one first.");
-            return;
-        }
-
-        listAccounts();
-        int index = (ReadInt("Select account number to deposit into: ") - 1);
-
-        if (index < 0 || index >= accounts.size()) {
-            System.out.println("Invalid account selection.\n");
-            return;
-        }
+        BankAccount account = SelectAccount("deposit into");
+        if (account == null) return;
 
         float amount = ReadFloat("Enter deposit amount: ");
         if (amount <= 0) {
-            System.out.println("Deposit amount must be positive");
+            System.out.println("Deposit amount must be positive.");
             return;
         }
 
-        BankAccount account = accounts.get(index);
         account.deposit(amount);
         System.out.println("Deposit successful.");
     }
@@ -86,7 +84,7 @@ public class Main {
         BankAccount acc = new CheckingAccount(data.getAccHolder(), data.getBIC(),
                 data.getAccNumber(), data.getBalance(), overdraft);
         accounts.add(acc);
-        System.out.println("Checking account created!\n");
+        System.out.println("Checking account created!");
     }
 
     private static void CreateSavingAccount() {
@@ -94,7 +92,7 @@ public class Main {
 
         BankAccount acc = new SavingsAccount(data.getAccHolder(), data.getBIC(), data.getAccNumber(), data.getBalance());
         accounts.add(acc);
-        System.out.println("Savings account created!\n");
+        System.out.println("Savings account created!");
     }
 
     private static void CreateCreditAccount() {
@@ -102,14 +100,22 @@ public class Main {
         if (data.getBalance() > 0) {
             BankAccount acc = new SavingsAccount(data.getAccHolder(), data.getBIC(), data.getAccNumber(), data.getBalance());
             accounts.add(acc);
-            System.out.println("Credit account created!\n");
-        }
-        else {
+            System.out.println("Credit account created!");
+        } else {
             System.out.println("Credit Balance can't be positive!");
         }
 
     }
 
+    //HELPERS FOR READABILITY:
+    private static Boolean CheckIfListEmpty() {
+        if (accounts.isEmpty()) {
+            System.out.println("No accounts available. Create one first.");
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private static void ChooseCreateAccount() {
         PrintAccountOptions();
@@ -124,6 +130,22 @@ public class Main {
         }
     }
 
+    private static BankAccount SelectAccount(String action) {
+        if (CheckIfListEmpty()) {
+            return null;
+        }
+
+        listAccounts();
+        int index = ReadInt("Select account number to " + action + ": ") - 1;
+
+        if (index < 0 || index >= accounts.size()) {
+            System.out.println("Invalid account selection.");
+            return null;
+        }
+
+        return accounts.get(index);
+    }
+
     private static BankAccount AskBasicData() {
         String holder = ReadString("Account holder: ");
         String bic = ReadString("BIC: ");
@@ -135,7 +157,7 @@ public class Main {
     //Print all accounts
     private static void listAccounts() {
         if (accounts.isEmpty()) {
-            System.out.println("No accounts found.\n");
+            System.out.println("No accounts found.");
         } else {
             System.out.println("=== Accounts ===");
             for (int i = 0; i < accounts.size(); i++) {
