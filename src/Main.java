@@ -20,7 +20,7 @@ public class Main {
                 case 3 -> WithdrawFromAccount();
                 case 4 -> listAccounts();
                 case 5 -> TransferToAccount();
-                case 6 -> System.out.println("Delete account feature not yet implemented.");
+                case 6 -> DeleteAccount();
                 case 0 -> System.out.println("Exiting program...");
                 default -> System.out.println("Invalid input, try again.");
             }
@@ -28,6 +28,23 @@ public class Main {
         input.close();
     }
 
+    //ACCOUNT ACTIONS
+    private static void DeleteAccount(){
+        if (CheckIfListEmpty()) {
+            return;
+        }
+
+        listAccounts();
+        int index = ReadInt("Select account number to delete: ") - 1;
+
+        if (index < 0 || index >= accounts.size()) {
+            System.out.println("Invalid account selection.\n");
+            return;
+        }
+
+        BankAccount removed = accounts.remove(index);
+        System.out.println("Account deleted: " + removed);
+    }
 
     private static void TransferToAccount() {
         System.out.println("Select source account:");
@@ -77,6 +94,7 @@ public class Main {
         System.out.println("Deposit successful.");
     }
 
+    //Account Creators
     private static void CreateCheckingAccount() {
         BankAccount data = AskBasicData();
         float overdraft = ReadFloat("Overdraft limit: ");
@@ -107,7 +125,7 @@ public class Main {
 
     }
 
-    //HELPERS FOR READABILITY:
+    //HELPERS TO REDUCE DUPLICATE CODE:
     private static Boolean CheckIfListEmpty() {
         if (accounts.isEmpty()) {
             System.out.println("No accounts available. Create one first.");
@@ -203,7 +221,8 @@ public class Main {
                 2. - Deposit Money
                 3. - Withdraw Money
                 4. - List all Accounts
-                5. - Delete Account
+                5. - Transfer Money
+                6. - Delete Account
                 0. - Close Program
                 """);
     }
