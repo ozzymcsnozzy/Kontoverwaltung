@@ -1,4 +1,4 @@
-public abstract class BankAccount {
+public class BankAccount {
     private String accHolder;
     private String BIC;
     private String accNumber;
@@ -40,5 +40,17 @@ public abstract class BankAccount {
 
     public void setBalance(float balance) {
         this.balance = balance;
+    }
+
+    public String getAccHolder() {
+        return accHolder;
+    }
+
+    public String getBIC() {
+        return BIC;
+    }
+
+    public String getAccNumber() {
+        return accNumber;
     }
 }

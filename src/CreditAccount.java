@@ -7,9 +7,11 @@ public class CreditAccount extends BankAccount {
     @Override
     public void deposit(float amount) {
         if (getBalance() + amount <= 0F) {
-            super.deposit(amount);
+            deposit(amount);
         } else {
-            System.out.println("Deposit denied: credit accounts cannot have a positive balance.");
+            Float overZero = getBalance() + amount;
+            System.out.println("Deposit denied: credit accounts cannot have a positive balance." +
+                    "With your amount input you would overpay your Credit by " + overZero + "€");
         }
     }
 
