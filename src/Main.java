@@ -1,39 +1,42 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("C H E C K I N G S");
-        System.out.println();
-
-        CheckingAccount checkTest = new CheckingAccount("CheckTEST", "AT12345", "AT 32 234 369420", 250.45F, 500.00F);
-
-        System.out.println(checkTest);
-        checkTest.deposit(200F);
-        checkTest.withdraw(7000F);
-        checkTest.withdraw(50.30F);
-        System.out.println(checkTest);
-
-        System.out.println("S A V I N G S");
-        System.out.println();
-
-        SavingsAccount saveTest = new SavingsAccount("SaveTEST", "AT12345", "AT 32 234 369420", 2545.45F);
-
-        System.out.println(saveTest);
-        saveTest.deposit(200F);
-        saveTest.withdraw(2000F);
-        saveTest.withdraw(50.30F);
-        System.out.println(saveTest);
-
-        System.out.println("C R E D I T");
-        System.out.println();
-
-        CreditAccount creditTest = new CreditAccount("CheckTEST", "AT12345", "AT 32 234 369420", -2545.45F);
-
-        System.out.println(creditTest);
-        creditTest.deposit(200F);
-        creditTest.withdraw(2000F);
-        creditTest.withdraw(50.30F);
-        creditTest.deposit(5000F);
-        System.out.println(creditTest);
-
+        Scanner input = new Scanner(System.in);
+        int menu = -1;
+        do {
+            System.out.println("""
+                    What would you like to do?
+                    1. - Open new Account
+                    2. - Deposit Money
+                    3. - Withdraw Money
+                    4. - See Account information
+                    5. - Delete Account
+                    0. - Close Program
+                    """);
+            try {String userInput = input.next();
+                menu = Integer.parseInt(userInput);
+                if (menu > -1 && menu <= 5) {
+                    switch (menu) {
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                    }
+                } else {
+                    System.out.println("Invalid input, try again");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input, try again");
+            }
+        } while (menu != 0);
+        System.out.println("Exiting Program....");
     }
 }
