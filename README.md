@@ -11,4 +11,4 @@ LBS Eibiswald | 2aAPC
 Kontoverwaltungssystem als Konsolen-app, laut arbeitsauftrag A2
 
 ## Screenshots
-<img src="Images/Screenshot%202025-09-15%20222227.png">
+<img src="src/Images/Screenshot 2025-09-15 222227.png">
