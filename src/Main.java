@@ -115,7 +115,7 @@ public class Main {
 
     private static void CreateCreditAccount() {
         BankAccount data = AskBasicData();
-        if (data.getBalance() > 0) {
+        if (data.getBalance() < 0) {
             BankAccount acc = new SavingsAccount(data.getAccHolder(), data.getBIC(), data.getAccNumber(), data.getBalance());
             accounts.add(acc);
             System.out.println("Credit account created!");
@@ -210,7 +210,7 @@ public class Main {
 
     private static String ReadString(String prompt) {
         System.out.print(prompt);
-        return input.nextLine();
+        return input.next();
     }
 
     // MENU TEXT PRINTERS:
