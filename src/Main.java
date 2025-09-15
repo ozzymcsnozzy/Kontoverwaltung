@@ -7,6 +7,8 @@ public class Main {
     private static List<BankAccount> accounts = new ArrayList<>();
 
     public static void main(String[] args) {
+        CheckingAccount test1 = new CheckingAccount("Holder", "BIC", "Number", 500, 200);
+        accounts.add(test1);
 
         int menu;
         do {
@@ -15,7 +17,7 @@ public class Main {
             switch (menu) {
                 case 1 -> ChooseCreateAccount();
                 case 2 -> DepositToAccount();
-                case 3 -> System.out.println("Withdraw feature not yet implemented.");
+                case 3 -> WithdrawFromAccount();
                 case 4 -> listAccounts();
                 case 5 -> System.out.println("Transfer feature not yet implemented.");
                 case 6 -> System.out.println("Delete account feature not yet implemented.");
@@ -24,6 +26,32 @@ public class Main {
             }
         } while (menu != 0);
         input.close();
+    }
+
+    private static void  WithdrawFromAccount(){
+        if (accounts.isEmpty()) {
+            System.out.println("No accounts available. Create one first.");
+            return;
+        }
+
+        listAccounts();
+        int index = (ReadInt("Select account number to withdraw from: ") - 1);
+
+        if (index < 0 || index >= accounts.size()) {
+            System.out.println("Invalid account selection.\n");
+            return;
+        }
+
+        float amount = ReadFloat("Enter withdraw amount: ");
+        if (amount <= 0 || amount > accounts.get(index).getBalance()){
+            System.out.println("Withdrawal amount must be less than overdraft limit");
+            return;
+        }
+
+        BankAccount account = accounts.get(index);
+        account.withdraw(amount);
+        System.out.println("Withdrawal successful.");
+
     }
 
     private static void DepositToAccount() {
