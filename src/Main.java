@@ -14,7 +14,7 @@ public class Main {
             menu = ReadInt("Choose an option: ");
             switch (menu) {
                 case 1 -> ChooseCreateAccount();
-                case 2 -> System.out.println("Deposit feature not yet implemented.");
+                case 2 -> DepositToAccount();
                 case 3 -> System.out.println("Withdraw feature not yet implemented.");
                 case 4 -> listAccounts();
                 case 5 -> System.out.println("Transfer feature not yet implemented.");
@@ -24,6 +24,31 @@ public class Main {
             }
         } while (menu != 0);
         input.close();
+    }
+
+    private static void DepositToAccount() {
+        if (accounts.isEmpty()) {
+            System.out.println("No accounts available. Create one first.");
+            return;
+        }
+
+        listAccounts();
+        int index = (ReadInt("Select account number to deposit into: ") - 1);
+
+        if (index < 0 || index >= accounts.size()) {
+            System.out.println("Invalid account selection.\n");
+            return;
+        }
+
+        float amount = ReadFloat("Enter deposit amount: ");
+        if (amount <= 0) {
+            System.out.println("Deposit amount must be positive");
+            return;
+        }
+
+        BankAccount account = accounts.get(index);
+        account.deposit(amount);
+        System.out.println("Deposit successful.");
     }
 
     private static void CreateCheckingAccount() {

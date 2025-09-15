@@ -1,5 +1,5 @@
 public class CheckingAccount extends BankAccount {
-    private float overdraftLimit;
+    private final float overdraftLimit;
 
     CheckingAccount(String accHolder, String BIC, String accNumber, float balance, float overdraftLimit) {
         super(accHolder, BIC, accNumber, balance);
