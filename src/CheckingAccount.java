@@ -4,6 +4,7 @@ public class CheckingAccount extends BankAccount {
     CheckingAccount(String accHolder, String BIC, String accNumber, float balance, float overdraftLimit) {
         super(accHolder, BIC, accNumber, balance);
         this.overdraftLimit = overdraftLimit;
+        setAccType(AccountType.CHECKING);
     }
 
     @Override

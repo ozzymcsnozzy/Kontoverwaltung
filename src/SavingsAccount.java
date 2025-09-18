@@ -1,6 +1,7 @@
 public class SavingsAccount extends BankAccount {
     SavingsAccount(String accHolder, String BIC, String accNumber, float balance) {
         super(accHolder, BIC, accNumber, balance);
+        setAccType(AccountType.SAVINGS);
     }
 
     @Override

@@ -1,7 +1,7 @@
 public class CreditAccount extends BankAccount {
-
     public CreditAccount(String accHolder, String BIC, String accNumber, float balance) {
         super(accHolder, BIC, accNumber, balance);
+        setAccType(AccountType.CREDIT);
     }
 
     @Override
